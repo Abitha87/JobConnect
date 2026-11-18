@@ -1,0 +1,130 @@
+
+{% extends "base.html" %}
+
+{% block title %}Post a Job - JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container post-job-page">
+
+    <div class="post-job-heading">
+        <span class="section-label">EMPLOYER WORKSPACE</span>
+        <h2>Post a New Job</h2>
+        <p>Find talented candidates and build your dream team.</p>
+    </div>
+
+    <div class="post-job-layout">
+
+        <!-- Form Information -->
+        <div class="post-job-info">
+            <div class="post-info-icon">J</div>
+            <h3>Find the right talent.</h3>
+            <p>
+                Create a clear and detailed job listing to attract
+                candidates who match your company's requirements.
+            </p>
+
+            <div class="post-info-points">
+                <div>✓ Reach potential candidates</div>
+                <div>✓ Manage applications easily</div>
+                <div>✓ Connect with skilled professionals</div>
+            </div>
+        </div>
+
+        <!-- Job Form -->
+        <div class="post-job-form-card">
+
+            <div class="form-card-heading">
+                <h3>Job Details</h3>
+                <p>Fill in the information below to publish your opportunity.</p>
+            </div>
+
+            <form method="POST">
+
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Job Title *</label>
+                    <input type="text" name="title"
+                           class="form-control post-job-input"
+                           placeholder="Example: Python Developer"
+                           required maxlength="150">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Company Name *</label>
+                    <input type="text" name="company"
+                           class="form-control post-job-input"
+                           placeholder="Enter company name"
+                           required maxlength="150">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Job Description *</label>
+                    <textarea name="description"
+                              class="form-control post-job-input"
+                              rows="5"
+                              placeholder="Describe responsibilities, skills and qualifications..."
+                              required></textarea>
+                </div>
+
+                <div class="post-form-row">
+
+                    <div class="mb-3">
+                        <label class="form-label">Salary *</label>
+                        <input type="text" name="salary"
+                               class="form-control post-job-input"
+                               placeholder="Example: ₹3 - 5 LPA"
+                               required maxlength="100">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Location *</label>
+                        <input type="text" name="location"
+                               class="form-control post-job-input"
+                               placeholder="Example: Chennai"
+                               required maxlength="100">
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Job Category *</label>
+
+                    <select name="category"
+                            class="form-select post-job-input" required>
+
+                        <option value="">Select category</option>
+                        <option value="Software Development">Software Development</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Data Analytics">Data Analytics</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="AI and Machine Learning">AI and Machine Learning</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+                </div>
+
+                <button type="submit" class="publish-job-btn">
+                    Publish Job →
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('dashboard') }}"
+               class="post-job-back-link">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

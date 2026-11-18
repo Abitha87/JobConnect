@@ -1,0 +1,120 @@
+
+{% extends "base.html" %}
+
+{% block title %}JobConnect | Find Your Dream Job{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    <div class="container text-center">
+
+        <h1>Find Your Dream Job Today</h1>
+
+        <p>
+            Discover opportunities, connect with employers,
+            and take the next step in your career.
+        </p>
+
+        <form class="search-box" action="{{ url_for('jobs') }}" method="GET">
+
+            <input type="text" name="keyword"
+                   placeholder="Job title or keyword">
+
+            <input type="text" name="location"
+                   placeholder="Enter location">
+
+            <button type="submit" class="btn btn-primary">
+                Search Jobs
+            </button>
+
+        </form>
+
+    </div>
+</section>
+
+<!-- Featured Jobs -->
+<section class="container py-5" id="jobs">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Featured Opportunities</h2>
+        <p class="text-muted">
+            Explore opportunities that match your skills.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="job-card">
+                <h5>Python Developer</h5>
+                <p class="text-muted">ABC Technologies</p>
+                <p>Location: Chennai</p>
+                <p>Salary: ₹3 - 5 LPA</p>
+                <span class="badge bg-primary">Full Time</span>
+                <a href="{{ url_for('jobs') }}"
+                   class="btn btn-outline-primary w-100 mt-3">
+                    View Jobs
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="job-card">
+                <h5>Data Analyst</h5>
+                <p class="text-muted">XYZ Solutions</p>
+                <p>Location: Bangalore</p>
+                <p>Salary: ₹4 - 6 LPA</p>
+                <span class="badge bg-success">Full Time</span>
+                <a href="{{ url_for('jobs') }}"
+                   class="btn btn-outline-primary w-100 mt-3">
+                    View Jobs
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="job-card">
+                <h5>Web Developer</h5>
+                <p class="text-muted">Tech Innovations</p>
+                <p>Location: Coimbatore</p>
+                <p>Salary: ₹3 - 4 LPA</p>
+                <span class="badge bg-info">Internship</span>
+                <a href="{{ url_for('jobs') }}"
+                   class="btn btn-outline-primary w-100 mt-3">
+                    View Jobs
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5" id="about">
+    <div class="container text-center">
+
+        <h2>About JobConnect</h2>
+
+        <p>
+            JobConnect is a platform that brings job seekers
+            and employers together. Find opportunities,
+            post vacancies, and build your career.
+        </p>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-4">
+    <p class="mb-0">
+        © 2026 JobConnect. All Rights Reserved.
+    </p>
+</footer>
+
+{% endblock %}

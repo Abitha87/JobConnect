@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Job Listings - JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container employer-jobs-page">
+
+    <!-- Page Header -->
+    <div class="employer-jobs-header">
+        <div>
+            <span class="section-label">EMPLOYER WORKSPACE</span>
+            <h2>My Job Listings</h2>
+            <p>Manage your job postings and track applications.</p>
+        </div>
+
+        <a href="{{ url_for('post_job') }}" class="btn post-job-btn">
+            + Post Another Job
+        </a>
+    </div>
+
+    <!-- Job Count -->
+    <div class="job-summary-card">
+        <div class="summary-icon">J</div>
+        <div>
+            <h3>{{ jobs|length }}</h3>
+            <p>Total Jobs Posted</p>
+        </div>
+    </div>
+
+    <!-- Job Listings -->
+    <div class="employer-listings">
+
+        {% for job in jobs %}
+
+        <div class="employer-job-card">
+
+            <div class="employer-job-top">
+                <div>
+                    <span class="job-category-tag">{{ job.category }}</span>
+                    <h4>{{ job.title }}</h4>
+                    <p class="employer-company">{{ job.company }}</p>
+                </div>
+            </div>
+
+            <div class="employer-job-details">
+                <div>
+                    <span class="detail-label">LOCATION</span>
+                    <p>{{ job.location }}</p>
+                </div>
+
+                <div>
+                    <span class="detail-label">SALARY</span>
+                    <p>{{ job.salary }}</p>
+                </div>
+
+                <div>
+                    <span class="detail-label">CATEGORY</span>
+                    <p>{{ job.category }}</p>
+                </div>
+            </div>
+
+            <div class="employer-job-description">
+                <p>{{ job.description }}</p>
+            </div>
+
+            <div class="employer-job-footer">
+                <span class="listing-status">Posted Job</span>
+
+                <a href="{{ url_for('view_applications', job_id=job.id) }}"
+                   class="btn applications-btn">
+                    View Applications →
+                </a>
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="employer-empty-state">
+            <div class="empty-job-icon">J</div>
+            <h4>No Jobs Posted Yet</h4>
+            <p>You haven't posted any job opportunities. Create your first listing to get started.</p>
+
+            <a href="{{ url_for('post_job') }}" class="btn post-job-btn">
+                + Post Your First Job
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

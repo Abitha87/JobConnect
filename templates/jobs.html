@@ -1,0 +1,170 @@
+
+{% extends "base.html" %}
+
+{% block title %}Find Jobs | JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="jobs-page">
+
+    <!-- Page Header -->
+    <div class="jobs-header">
+        <span class="jobs-tag">CAREER OPPORTUNITIES</span>
+        <h1>Find Your Next Opportunity</h1>
+        <p>Discover jobs that match your skills, interests and career goals.</p>
+    </div>
+
+    <!-- Search and Filters -->
+    <form method="GET" action="{{ url_for('jobs') }}"
+          class="jobs-search-card">
+
+        <div class="row g-3 align-items-end">
+
+            <div class="col-md-4">
+                <label class="form-label">Job Title or Company</label>
+                <input type="text" name="keyword"
+                       class="form-control"
+                       placeholder="e.g. Python Developer"
+                       value="{{ keyword }}">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Location</label>
+                <input type="text" name="location"
+                       class="form-control"
+                       placeholder="e.g. Chennai"
+                       value="{{ location }}">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Category</label>
+                <input type="text" name="category"
+                       class="form-control"
+                       placeholder="e.g. IT"
+                       value="{{ category }}">
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit"
+                        class="btn btn-primary w-100 jobs-search-btn">
+                    Search Jobs
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- Job Results -->
+    <div class="jobs-results-header">
+        <div>
+            <h3>Available Jobs</h3>
+            <p>Explore opportunities waiting for you.</p>
+        </div>
+
+        <span class="jobs-count">
+            {{ jobs|length }} Jobs Found
+        </span>
+    </div>
+
+    {% for job in jobs %}
+
+        <div class="job-listing-card">
+
+            <div class="job-listing-top">
+
+                <div>
+                    <h4>{{ job.title }}</h4>
+                    <p class="job-company">{{ job.company }}</p>
+                </div>
+
+                <span class="badge bg-success">Active Listing</span>
+
+            </div>
+
+            <div class="job-details">
+
+                <span>
+                    <strong>Location</strong>
+                    {{ job.location }}
+                </span>
+
+                <span>
+                    <strong>Salary</strong>
+                    {{ job.salary }}
+                </span>
+
+                <span>
+                    <strong>Category</strong>
+                    {{ job.category }}
+                </span>
+
+            </div>
+
+            <div class="job-description">
+                <h6>Job Description</h6>
+                <p>{{ job.description }}</p>
+            </div>
+
+            {% if current_user.is_authenticated and current_user.role == "seeker" %}
+
+                <div class="apply-section">
+
+                    <form method="POST"
+                          action="{{ url_for('apply_job', job_id=job.id) }}"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden"
+                               name="csrf_token"
+                               value="{{ csrf_token() }}">
+
+                        <label class="form-label">
+                            Upload Resume (PDF only, maximum 5 MB)
+                        </label>
+
+                        <input type="file"
+                               name="resume"
+                               class="form-control mb-3"
+                               accept=".pdf,application/pdf"
+                               required>
+
+                        <button type="submit"
+                                class="btn btn-primary apply-button">
+                            Apply Now
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% elif not current_user.is_authenticated %}
+
+                <a href="{{ url_for('login') }}"
+                   class="btn btn-outline-primary mt-3">
+                    Login to Apply
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    {% else %}
+
+        <div class="jobs-empty-state">
+            <h4>No Jobs Found</h4>
+            <p>Try changing your search filters to find more opportunities.</p>
+            <a href="{{ url_for('jobs') }}"
+               class="btn btn-outline-primary">
+                View All Jobs
+            </a>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

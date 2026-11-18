@@ -1,0 +1,125 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Dashboard | JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <!-- Welcome Section -->
+    <div class="dashboard-welcome">
+        <div>
+            <span class="dashboard-tag">MY DASHBOARD</span>
+            <h1>Welcome, {{ current_user.name }}!</h1>
+            <p>Manage your JobConnect account and explore your opportunities.</p>
+        </div>
+
+        <div class="dashboard-avatar">
+            {{ current_user.name[0]|upper }}
+        </div>
+    </div>
+
+    <!-- Account Information -->
+    <div class="dashboard-section">
+        <h3>Account Information</h3>
+        <p class="section-subtitle">Your registered account details</p>
+
+        <div class="account-grid">
+
+            <div class="account-card">
+                <span class="account-label">Full Name</span>
+                <h5>{{ current_user.name }}</h5>
+            </div>
+
+            <div class="account-card">
+                <span class="account-label">Email Address</span>
+                <h5>{{ current_user.email }}</h5>
+            </div>
+
+            <div class="account-card">
+                <span class="account-label">Account Role</span>
+                <h5>{{ current_user.role|title }}</h5>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Employer Panel -->
+    {% if current_user.role == "employer" %}
+
+    <div class="dashboard-section">
+        <h3>Employer Panel</h3>
+        <p class="section-subtitle">
+            Manage your job opportunities and applicants.
+        </p>
+
+        <div class="action-grid">
+
+            <div class="action-card">
+                <div class="action-icon">+</div>
+                <h5>Post a Job</h5>
+                <p>Create and publish a new job opportunity.</p>
+                <a href="{{ url_for('post_job') }}"
+                   class="btn btn-primary">
+                    Post a Job →
+                </a>
+            </div>
+
+            <div class="action-card">
+                <div class="action-icon">J</div>
+                <h5>My Job Listings</h5>
+                <p>View and manage your published jobs.</p>
+                <a href="{{ url_for('my_jobs') }}"
+                   class="btn btn-outline-primary">
+                    View My Jobs →
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Job Seeker Panel -->
+    {% elif current_user.role == "seeker" %}
+
+    <div class="dashboard-section">
+        <h3>Job Seeker Panel</h3>
+        <p class="section-subtitle">
+            Discover new opportunities and track your applications.
+        </p>
+
+        <div class="action-grid">
+
+            <div class="action-card">
+                <div class="action-icon">S</div>
+                <h5>Explore Jobs</h5>
+                <p>Search for jobs that match your skills and interests.</p>
+                <a href="{{ url_for('jobs') }}"
+                   class="btn btn-primary">
+                    Find Jobs →
+                </a>
+            </div>
+
+            <div class="action-card">
+                <div class="action-icon">A</div>
+                <h5>My Applications</h5>
+                <p>Track the status of your submitted applications.</p>
+                <a href="{{ url_for('my_applications') }}"
+                   class="btn btn-outline-primary">
+                    View Applications →
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+
+{% extends "base.html" %}
+
+{% block title %}Register | JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <div class="auth-icon">JC</div>
+            <h2>Create Your Account</h2>
+            <p>Start building your career with JobConnect.</p>
+        </div>
+
+        <div class="auth-body">
+
+            <h4>Join JobConnect</h4>
+            <p class="auth-subtitle">
+                Enter your details to get started.
+            </p>
+
+            <form method="POST">
+
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name"
+                           class="form-control auth-input"
+                           placeholder="Enter your full name"
+                           required maxlength="100">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email"
+                           class="form-control auth-input"
+                           placeholder="Enter your email"
+                           required maxlength="120">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password"
+                           class="form-control auth-input"
+                           placeholder="Minimum 8 characters"
+                           minlength="8" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Register As</label>
+
+                    <select name="role"
+                            class="form-select auth-input" required>
+                        <option value="">Select your role</option>
+                        <option value="seeker">Job Seeker</option>
+                        <option value="employer">Employer</option>
+                    </select>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary auth-button">
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="auth-divider">
+                <span>Already a member?</span>
+            </div>
+
+            <p class="text-center mb-2">
+                Already have an account?
+                <a href="{{ url_for('login') }}">Login</a>
+            </p>
+
+            <p class="text-center mb-0">
+                <a href="{{ url_for('home') }}" class="back-link">
+                    ← Back to Home
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

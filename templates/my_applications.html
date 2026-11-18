@@ -1,0 +1,123 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Applications - JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-applications-page">
+
+    <!-- Page Header -->
+    <div class="my-applications-header">
+        <div>
+            <span class="section-label">JOB SEEKER WORKSPACE</span>
+            <h2>My Applications</h2>
+            <p>Track your job applications and stay updated on their progress.</p>
+        </div>
+
+        <a href="{{ url_for('jobs') }}" class="browse-jobs-btn">
+            Explore More Jobs →
+        </a>
+    </div>
+
+    <!-- Application Count -->
+    <div class="my-application-summary">
+        <div class="my-application-summary-icon">A</div>
+        <div>
+            <h3>{{ applications|length }}</h3>
+            <p>Total Applications</p>
+        </div>
+    </div>
+
+    <!-- Application Cards -->
+    <div class="my-application-list">
+
+        {% for application in applications %}
+
+        <div class="my-application-card">
+
+            <div class="my-application-top">
+
+                <div class="my-job-icon">J</div>
+
+                <div class="my-job-info">
+                    <h4>{{ application.job.title }}</h4>
+                    <p>{{ application.job.company }}</p>
+                </div>
+
+                <div class="my-application-status">
+
+                    {% if application.status == "Accepted" %}
+                        <span class="candidate-badge accepted">Accepted</span>
+
+                    {% elif application.status == "Rejected" %}
+                        <span class="candidate-badge rejected">Rejected</span>
+
+                    {% else %}
+                        <span class="candidate-badge pending">Pending</span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="my-application-details">
+
+                <div>
+                    <span>LOCATION</span>
+                    <strong>{{ application.job.location }}</strong>
+                </div>
+
+                <div>
+                    <span>APPLIED ON</span>
+                    <strong>{{ application.applied_at.strftime('%d-%m-%Y') }}</strong>
+                </div>
+
+            </div>
+
+            <div class="my-application-footer">
+                <span>Application Status</span>
+
+                {% if application.status == "Accepted" %}
+                    <strong class="status-text-accepted">Your application was accepted.</strong>
+
+                {% elif application.status == "Rejected" %}
+                    <strong class="status-text-rejected">Your application was rejected.</strong>
+
+                {% else %}
+                    <strong class="status-text-pending">Waiting for employer response.</strong>
+                {% endif %}
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="my-applications-empty">
+
+            <div class="empty-application-icon">A</div>
+
+            <h4>No Applications Yet</h4>
+
+            <p>
+                You haven't applied for any jobs yet.
+                Explore available opportunities and take the next step in your career.
+            </p>
+
+            <a href="{{ url_for('jobs') }}" class="browse-jobs-btn">
+                Explore Jobs →
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

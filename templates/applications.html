@@ -1,0 +1,139 @@
+
+{% extends "base.html" %}
+
+{% block title %}Job Applications - JobConnect{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container applications-page">
+
+    <!-- Page Header -->
+    <div class="applications-header">
+        <div>
+            <span class="section-label">EMPLOYER WORKSPACE</span>
+            <h2>Job Applications</h2>
+            <p>Review candidates who applied for this opportunity.</p>
+        </div>
+
+        <a href="{{ url_for('my_jobs') }}" class="applications-back-btn">
+            ← Back to My Jobs
+        </a>
+    </div>
+
+    <!-- Job Information -->
+    <div class="application-job-banner">
+        <div>
+            <span class="job-category-tag">JOB POSITION</span>
+            <h3>{{ job.title }}</h3>
+            <p>Review and manage applications for this job posting.</p>
+        </div>
+        <div class="application-total">
+            <strong>{{ applications|length }}</strong>
+            <span>Applications</span>
+        </div>
+    </div>
+
+    <!-- Applications List -->
+    <div class="applications-list">
+
+        {% for application in applications %}
+
+        <div class="candidate-card">
+
+            <div class="candidate-header">
+
+                <div class="candidate-avatar">
+                    {{ application.user.name[0]|upper }}
+                </div>
+
+                <div class="candidate-info">
+                    <h4>{{ application.user.name }}</h4>
+                    <p>{{ application.user.email }}</p>
+                </div>
+
+                <div class="candidate-status">
+                    {% if application.status == "Accepted" %}
+                        <span class="candidate-badge accepted">Accepted</span>
+
+                    {% elif application.status == "Rejected" %}
+                        <span class="candidate-badge rejected">Rejected</span>
+
+                    {% else %}
+                        <span class="candidate-badge pending">Pending</span>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="candidate-applied">
+                <span>Applied On</span>
+                <strong>{{ application.applied_at.strftime('%d-%m-%Y') }}</strong>
+            </div>
+
+            <div class="candidate-actions">
+
+                <a href="{{ url_for('download_resume', application_id=application.id) }}"
+                   class="resume-download-btn">
+                    Download Resume
+                </a>
+
+                <form method="POST"
+                      action="{{ url_for('update_application', application_id=application.id) }}"
+                      class="candidate-status-form">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           value="{{ csrf_token() }}">
+
+                    <select name="status" class="form-select candidate-status-select">
+
+                        <option value="Pending"
+                            {% if application.status == "Pending" %}selected{% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="Accepted"
+                            {% if application.status == "Accepted" %}selected{% endif %}>
+                            Accepted
+                        </option>
+
+                        <option value="Rejected"
+                            {% if application.status == "Rejected" %}selected{% endif %}>
+                            Rejected
+                        </option>
+
+                    </select>
+
+                    <button type="submit" class="update-status-btn">
+                        Update Status
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="applications-empty-state">
+            <div class="empty-application-icon">A</div>
+            <h4>No Applications Yet</h4>
+            <p>No candidates have applied for this job yet. Applications will appear here when candidates apply.</p>
+
+            <a href="{{ url_for('my_jobs') }}" class="applications-back-btn">
+                Back to My Jobs
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
