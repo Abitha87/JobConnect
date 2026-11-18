@@ -85,7 +85,7 @@ Note: The structure is illustrative. Update it if your actual project folders ar
 ### Step 1: Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Abitha87/JobConnect.git
 ```
 
 ### Step 2: Navigate to the Project Folder
