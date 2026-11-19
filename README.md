@@ -160,19 +160,29 @@ http://127.0.0.1:5000/
 5. Employer Management Module
 6. Admin Management Module
 
-## 7. Future Enhancements
+## 7.Live Deployment
+
+JobConnect is successfully deployed and available online.
+
+- **Live Website:** https://jobconnect-adxw.onrender.com
+- **GitHub Repository:** https://github.com/Abitha87/JobConnect
+
+**Hosting Platform:** Render  
+**Framework:** Python Flask
+
+## 8. Future Enhancements
 
 - Email notifications for application updates.
 - Advanced job recommendation system.
 - Online deployment.
 - Integration with external job listing APIs.
 
-## 8. Author
+## 9. Author
 
 **Abitha Shanmugam**
 
 B.Tech – Artificial Intelligence and Data Science
 
-## 9. Project Title
+## 10. Project Title
 
 **JobConnect – Job Portal Web Application**
