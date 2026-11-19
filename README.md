@@ -6,6 +6,31 @@
 JobConnect is a web-based job portal application developed using Python Flask. It provides a platform where job seekers can explore job opportunities and apply for jobs, while employers can post job openings and manage applications.
 
 The application also includes an administrator dashboard to manage registered users and job postings.
+## Application Screenshots
+
+### 1. Homepage
+![JobConnect Homepage](screenshots/home page.png)
+
+### 2. Login Page
+![Login Page](screenshots/login.png)
+
+### 3. Registration Page
+![Registration Page](screenshots/registration.png)
+
+### 4. Job Seeker Dashboard
+![Job Seeker Dashboard](screenshots/job_seeker_dashboard.png)
+
+### 5. Employer Dashboard
+![Employer Dashboard](screenshots/employer_dashboard.png)
+
+### 6. Admin Dashboard
+![Admin Dashboard](screenshots/admin_dashboard.png)
+
+### 7. Job Post
+![Job Post](screenshots/job_post.png)
+
+### 8. Application Status
+![Application Status](screenshots/applications.png)
 
 ## 2. Features
 
