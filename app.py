@@ -26,15 +26,34 @@ from functools import wraps
 # 1. FLASK APPLICATION CONFIGURATION
 # ==========================================
 
+
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = "jobconnect-dev-secret-change-later"
+# Secret key
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "jobconnect-dev-secret-change-later"
+)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///jobconnect.db"
+# Persistent storage directory (configured on Render)
+DATA_DIR = os.environ.get("JOBCONNECT_DATA_DIR")
+
+if DATA_DIR:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        "sqlite:///" + os.path.join(DATA_DIR, "jobconnect.db")
+    )
+else:
+    # Keep the existing local database configuration
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///jobconnect.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 # Resume upload configuration
-UPLOAD_FOLDER = os.path.join(app.root_path, "uploads")
+if DATA_DIR:
+    UPLOAD_FOLDER = os.path.join(DATA_DIR, "uploads")
+else:
+    UPLOAD_FOLDER = os.path.join(app.root_path, "uploads")
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -42,6 +61,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {"pdf"}
+
 
 # ==========================================
 # 2. INITIALIZE EXTENSIONS
